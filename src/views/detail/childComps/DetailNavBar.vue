@@ -1,69 +1,60 @@
 <template>
-  <nav-bar>
-    <img slot="left" class="back" @click="backClick" src="~assets/img/common/back.svg" alt="">
-    <div slot="center" class="title">
-      <div class="title-item"
-           v-for="(item, index) in titles"
-           @click="titleClick(index)"
-           :class="{active: currentIndex === index}">
-        {{item}}
+  <div>
+    <nar-bar>
+      <div slot="left" @click="backimg">
+        <img class="Limg" src="~assets/img/common/back.svg" alt="" />
       </div>
-    </div>
-  </nav-bar>
+      <div slot="center" class="center">
+        <div
+          v-for="(item, index) in navdata"
+          class="centeritem"
+          @click="centeritems(index)"
+          :class="{ getcolor: index === curindex }"
+        >
+          {{ item }}
+        </div>
+      </div>
+    </nar-bar>
+  </div>
 </template>
 
 <script>
-  import NavBar from 'components/common/navbar/NavBar'
+import NarBar from "components/common/navbar/NavBar.vue";
+export default {
+  data() {
+    return {
+      navdata: ["商品", "参数", "评论", "推荐"],
+      curindex: 0,
+    };
+  },
+  components: {
+    NarBar,
+  },
 
-	export default {
-		name: "DetailNavBar",
-    props: {
-			titles: {
-				type: Array,
-        default: () => {
-        	return ['商品', '参数', '评论', '推荐']
-        }
-      },
-      currentIndex: {
-				type: Number,
-        default: 0
-      }
+  methods: {
+    centeritems(index) {
+      this.curindex = index;
+      this.$emit("titleclick", index);
     },
-    // data() {
-			// return {
-			// 	currentIndex: 0
-    //   }
-    // },
-    components: {
-			NavBar
+    backimg() {
+      this.$router.back();
     },
-    methods: {
-	    backClick() {
-	    	this.$router.back()
-      },
-	    titleClick(index) {
-        this.$emit('titleClick', index)
-      }
-    }
-	}
+  },
+};
 </script>
 
 <style scoped>
-  .back {
-    margin-top: 12px;
-  }
-
-  .title {
-    display: flex;
-    padding: 0 20px;
-  }
-
-  .title-item {
-    flex: 1;
-    font-size: 14px;
-  }
-
-  .title-item.active {
-    color: var(--color-high-text)
-  }
+.center {
+  display: flex;
+}
+.centeritem {
+  flex: 1;
+}
+.getcolor {
+  color: var(--color-high-text);
+}
+.Limg {
+  margin-top: 10px;
+  margin-left: 10px;
+}
 </style>

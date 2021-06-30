@@ -1,50 +1,43 @@
 <template>
-  <swiper ref="swiper" v-if="banners.length">
-    <swiper-item v-for="(item, index) in banners">
-      <a :href="item.link">
-        <img :src="item.image" alt="" @load="imageLoaded">
-      </a>
-    </swiper-item>
-  </swiper>
+  <div>
+    <swiper>
+      <swiper-item v-for="item in banners">
+        <a :href="item.link">
+          <img @load="swipimage" :src="item.image" alt="" />
+        </a>
+      </swiper-item>
+    </swiper>
+  </div>
 </template>
 
 <script>
-  import {Swiper, SwiperItem} from 'components/common/swiper'
-
-  export default {
-    name: "HomeSwiper",
-    props: {
-      banners: {
-        type: Array,
-        required: true
+import { Swiper, SwiperItem } from "components/common/swiper/index.js";
+export default {
+  data() {
+    return {
+      imageload: false,
+    };
+  },
+  components: {
+    Swiper,
+    SwiperItem,
+  },
+  props: {
+    banners: {
+      type: Array,
+      required: true,
+    },
+  },
+  methods: {
+    swipimage() {
+      if (!this.imageload) {
+        this.$emit("swipimagload");
+        this.imageload = true;
       }
     },
-    data() {
-    	return {
-    		isLoaded: false
-      }
-    },
-    components: {
-      Swiper,
-      SwiperItem
-    },
-    methods: {
-      startTimer() {
-	      this.$refs.swiper && this.$refs.swiper.startTimer()
-      },
-      stopTimer() {
-        this.$refs.swiper && this.$refs.swiper.stopTimer()
-      },
-	    imageLoaded() {
-      	if (!this.isLoaded) {
-      		this.$emit('swiperLoaded')
-          this.isLoaded = true
-        }
-	    }
-    }
-  }
+  },
+};
 </script>
 
-<style scoped>
-
+<style>
 </style>

@@ -1,24 +1,22 @@
 import * as types from './mutation-types'
 
 const actions = {
-	addToCart({state, commit}, info) {
-		return new Promise((resolve) => {
-			// 1.查看该商品是否已经添加到cartList中
-			const oldInfo = state.cartList.find(item => item.iid === info.iid)
+  addCart(content, payload) {
+    return new Promise((res, rej) => {
+      let oldProduct = content.state.cartList.find(item => item.iid === payload.iid)
+      if (oldProduct) {
 
-			// 2.如果oldInfo存在, 那么原来的数量加1
-			if (oldInfo) {
-				const index = state.cartList.indexOf(oldInfo)
-				commit(types.INCREMENT_COUNT, index)
-			} else {
-				info.count = 1
-				info.checked = true
-				commit(types.ADD_TO_CART, info)
-			}
+        content.commit(types.INCREMENT_COUNT, oldProduct)
+        res('当前的商品数量+1')
+      } else {
 
-			resolve()
-		})
-	}
+        content.commit(types.ADD_TO_CART, payload)
+        res('添加了新商品')
+      }
+
+    })
+
+  }
 }
 
 export default actions

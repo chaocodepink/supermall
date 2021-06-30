@@ -1,43 +1,39 @@
-import {TOP_DISTANCE} from "./const";
-import BackTop from 'components/content/backTop/BackTop'
-import {POP, NEW, SELL} from "./const";
 
-export const backTopMixin = {
-	components: {
-		BackTop
-	},
-	data() {
-		return {
-			showBackTop: false
-		}
-	},
-	methods: {
-		backTop() {
-			this.$refs.scroll.scrollTo(0, 0, 1000)
-		}
-	}
+
+
+import { formatDate } from "common/utils.js";
+import BackTop from "components/content/backTop/BackTop.vue";
+
+
+
+
+export const imagefresh = {
+  data() {
+    return {
+      refresh: null
+    }
+  },
+  mounted() {
+    this.refresh = formatDate(this.$refs.scroll.refresh, 50);
+    this.imageloads = () => {
+      this.refresh()
+    };
+    this.$bus.$on("imgLoad", this.imageloads);
+  }
 }
 
-export const tabControlMixin = {
-	data: function () {
-		return {
-			currentType: POP
-		}
-	},
-	methods: {
-		tabClick(index) {
-			switch (index) {
-				case 0:
-					this.currentType = POP
-					break
-				case 1:
-					this.currentType = NEW
-					break
-				case 2:
-					this.currentType = SELL
-					break
-			}
-			console.log(this.currentType);
-		}
-	}
+export const backtop = {
+  components: {
+    BackTop
+  },
+  data() {
+    return {
+      Lescroll: false,
+    }
+  },
+  methods: {
+    backtop() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
+  }
 }
