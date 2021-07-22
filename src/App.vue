@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    好1
     <keep-alive exclude="Detail">
       <router-view></router-view>
     </keep-alive>
